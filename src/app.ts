@@ -9,7 +9,12 @@ const context = process.env.CONTEXT || '';
 
 if (app.get('env') === 'production') app.use(morgan('combined'));
 else app.use(morgan('dev'));
-
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
+    next();
+  });
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
